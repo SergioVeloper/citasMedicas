@@ -5,6 +5,8 @@ const sequelize = require('./config/database'); // Asegúrate de importar tu con
 // Importar rutas
 const roleRoute = require('./routes/roleRoute');
 const userRoute = require('./routes/userRoute');
+const specialtyRoute = require('./routes/specialtyRoute');
+const doctorRoute = require('./routes/doctorRoute');
 // Aquí puedes importar otras rutas según sea necesario
 
 // Middleware y configuraciones
@@ -13,6 +15,8 @@ app.use(express.json());
 // Usar las rutas en la aplicación
 app.use('/roles', roleRoute); // Usar /roles para las rutas relacionadas con roles
 app.use('/users', userRoute); // Usar /users para las rutas relacionadas con usuarios
+app.use('/specialties', specialtyRoute); // Usar /specialties para las rutas relacionadas con especialidades
+app.use('/doctors', doctorRoute); // Usar /doctors para las rutas relacionadas con doctores
 // Puedes agregar más rutas aquí según sea necesario
 
 // Sincronizar la base de datos
