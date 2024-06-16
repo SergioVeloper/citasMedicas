@@ -76,17 +76,47 @@ const deleteAppointment = async (req, res) => {
 // Obtener appointments por fecha y status
 const getAppointmentsByDate = async (req, res) => {
     try {
-        const { date } = req.params; // Obtener el valor de date desde los parámetros de la URL
+        const { id, date } = req.params; // Obtener el valor de date desde los parámetros de la URL
         const { status } = req.query; // Obtener el valor de status desde los parámetros de consulta
 
         // Validación básica de los parámetros de entrada
-        if (!date || !status) {
+        if (!date || !status || !id) {
             return res.status(400).json({ error: 'Se requieren date y status en la consulta' });
         }
 
         const appointments = await Appointment.findAll({
             where: {
                 appointment_date: date,
+                doctor_id: id,
+                status: status
+            },
+            include: [Patient, Doctor]  // Incluye las relaciones con los modelos Patient y Doctor si están definidas
+        });
+
+        if (appointments.length > 0) {
+            res.status(200).json(appointments);
+        } else {
+            res.status(404).json({ error: 'Citas no encontradas' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Obtener appointments por paciente y status
+const getAppointmentsPatient = async (req, res) => {
+    try {
+        const { id } = req.params; // Obtener el valor de date desde los parámetros de la URL
+        const { status } = req.query; // Obtener el valor de status desde los parámetros de consulta
+
+        // Validación básica de los parámetros de entrada
+        if (!status || !id) {
+            return res.status(400).json({ error: 'Se requieren date y status en la consulta' });
+        }
+
+        const appointments = await Appointment.findAll({
+            where: {
+                patient_id: id,
                 status: status
             },
             include: [Patient, Doctor]  // Incluye las relaciones con los modelos Patient y Doctor si están definidas
@@ -108,5 +138,6 @@ module.exports = {
     getAllAppointments,
     updateAppointment,
     deleteAppointment,
-    getAppointmentsByDate
+    getAppointmentsByDate,
+    getAppointmentsPatient
 };
