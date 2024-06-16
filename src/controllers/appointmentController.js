@@ -132,6 +132,43 @@ const getAppointmentsPatient = async (req, res) => {
     }
 };
 
+// Obtener citas pagadas por un paciente en un rango de fechas
+const { Op } = require('sequelize');
+const getPaidAppointmentsByDateRange = async (req, res) => {
+    try {
+        const { id: patient_id } = req.params;
+        const { startDate, endDate, pay } = req.query;
+
+        if (!patient_id || !startDate || !endDate || typeof pay === 'undefined') {
+            return res.status(400).json({ error: 'Se requieren patient_id, startDate, endDate y pay en la consulta' });
+        }
+
+        // Convertir las fechas a objetos Date para la consulta
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const payStatus = pay.toLowerCase() === 'true';
+
+        const appointments = await Appointment.findAll({
+            where: {
+                patient_id: patient_id,
+                appointment_date: {
+                    [Op.between]: [start, end]
+                },
+                pay: payStatus
+            },
+            include: [Patient, Doctor]
+        });
+
+        if (appointments.length > 0) {
+            res.status(200).json(appointments);
+        } else {
+            res.status(404).json({ error: 'Citas no encontradas' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     createAppointment,
     getAppointmentById,
@@ -139,5 +176,6 @@ module.exports = {
     updateAppointment,
     deleteAppointment,
     getAppointmentsByDate,
-    getAppointmentsPatient
+    getAppointmentsPatient,
+    getPaidAppointmentsByDateRange
 };

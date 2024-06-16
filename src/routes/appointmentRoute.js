@@ -7,7 +7,8 @@ const {
     updateAppointment,
     deleteAppointment,
     getAppointmentsByDate,
-    getAppointmentsPatient
+    getAppointmentsPatient,
+    getPaidAppointmentsByDateRange
 } = require('../controllers/appointmentController');
 
 // Rutas para citas
@@ -18,5 +19,6 @@ router.put('/:id', updateAppointment);          // Actualizar una cita por ID
 router.delete('/:id', deleteAppointment);       // Eliminar una cita por ID
 router.get('/doctor/:id/date/:date', getAppointmentsByDate); // Obtener citas por fecha medico
 router.get('/patient/:id', getAppointmentsPatient); // Obtener citas por fecha paciente
+router.get('/patient_pay/:id', getPaidAppointmentsByDateRange); // Obtener citas pagadas por rango de fechas
 
 module.exports = router;

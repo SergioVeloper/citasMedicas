@@ -40,6 +40,11 @@ const Appointment = sequelize.define('Appointment', {
     notes: {
         type: DataTypes.TEXT,
         allowNull: true
+    },
+    pay: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     tableName: 'appointment',
