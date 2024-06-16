@@ -8,6 +8,8 @@ const userRoute = require('./routes/userRoute');
 const specialtyRoute = require('./routes/specialtyRoute');
 const doctorRoute = require('./routes/doctorRoute');
 const patientRoute = require('./routes/patientRoute');
+const appointmentRoute = require('./routes/appointmentRoute');
+const historyRoute = require('./routes/historyRoute');
 // Aquí puedes importar otras rutas según sea necesario
 
 // Middleware y configuraciones
@@ -19,6 +21,8 @@ app.use('/users', userRoute); // Usar /users para las rutas relacionadas con usu
 app.use('/specialties', specialtyRoute); // Usar /specialties para las rutas relacionadas con especialidades
 app.use('/doctors', doctorRoute); // Usar /doctors para las rutas relacionadas con doctores
 app.use('/patients', patientRoute); // Usar /patients para las rutas relacionadas con pacientes
+app.use('/appointments', appointmentRoute); // Usar /appointments para las rutas relacionadas con citas
+app.use('/histories', historyRoute); // Usar /histories para las rutas relacionadas con historiales
 // Puedes agregar más rutas aquí según sea necesario
 
 // Sincronizar la base de datos
