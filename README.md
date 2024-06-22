@@ -1,4 +1,5 @@
 # Proyecto de citas medicas de la materia SIS324
+El proyecto esta en la rama master
 Estudiantes: 
 Apaza Guzman Juan Agustin - Ing. de Sistemas
 Flores Gómez Adalid - Ing. de Sistemas
